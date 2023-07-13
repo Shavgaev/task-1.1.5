@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) {
         byte age = 10;
         UserService userService = new UserServiceImpl();
-//        userService.dropUsersTable();
         userService.createUsersTable();
         userService.saveUser("Zhenya","Shavgaev", age );
         userService.saveUser("ivan","ivanov", (byte) 25);
@@ -19,11 +18,9 @@ public class Main {
         List <User> list = userService.getAllUsers();
         for (User user:list) {
             System.out.println(user);
-
         }
         userService.cleanUsersTable();
         userService.dropUsersTable();
-
     }
 }
 
