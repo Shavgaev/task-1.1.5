@@ -19,15 +19,16 @@ public class Util {
     private static Connection connection;
 
     private static SessionFactory sessionFactory;
+
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
-                settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://localhost:3306/mydbtest?useSSL=false");
-                settings.put(Environment.USER, "root");
-                settings.put(Environment.PASS, "rootroot");
+                settings.put(Environment.DRIVER, DB_Driver);
+                settings.put(Environment.URL, DB_URL);
+                settings.put(Environment.USER, DB_USERNAME);
+                settings.put(Environment.PASS, DB_PASSWORD);
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
 
                 settings.put(Environment.SHOW_SQL, "true");
@@ -50,13 +51,13 @@ public class Util {
         return sessionFactory;
     }
 
-    public static void closeFactory(){
+    public static void closeFactory() {
         sessionFactory.close();
     }
 
     static {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(DB_Driver);
             connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -64,7 +65,6 @@ public class Util {
     }
 
     public static Connection getConnection() {
-
         return connection;
     }
 }

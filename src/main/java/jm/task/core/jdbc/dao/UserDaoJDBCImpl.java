@@ -3,7 +3,10 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,11 +62,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         String removeSql = "delete from Users where id = ? ";
-        try {
-            try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(removeSql)) {
-                preparedStatement.setLong(1, id);
-                preparedStatement.executeUpdate();
-            }
+        try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(removeSql)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

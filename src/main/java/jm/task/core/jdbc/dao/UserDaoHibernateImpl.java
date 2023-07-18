@@ -74,8 +74,8 @@ public class UserDaoHibernateImpl implements UserDao {
 
         try (Session session = Util.getSessionFactory().openSession()) {
             tr = session.beginTransaction();
-            User user = session.get(User.class, id);
-            session.delete(user);
+            String hql = "DELETE FROM User WHERE id = :userId";
+            session.createQuery(hql).setParameter("userId", id).executeUpdate();
             tr.commit();
         } catch (Exception e) {
             if (tr != null) {
@@ -83,7 +83,6 @@ public class UserDaoHibernateImpl implements UserDao {
             }
             e.printStackTrace();
         }
-
     }
 
     @Override
